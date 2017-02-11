@@ -1,5 +1,6 @@
 require_relative '../lib/scraper.rb'
 require_relative '../lib/movie.rb'
+require 'colorize'
 
 class CLI
 
@@ -37,6 +38,18 @@ class CLI
 
   def display_movie_details(n)
     movie = Movie.all[to_index(n)]
+
+    puts "#{movie.title.upcase}".colorize(:light_blue)
+    puts "  Critics score: ".colorize(:light_blue) + "#{movie.critics_score}"
+    puts "  Audience score: ".colorize(:light_blue) + "#{movie.audience_score}"
+    puts "  Critics consensus: ".colorize(:light_blue) + "#{movie.consensus}"
+    puts "  Rating: ".colorize(:light_blue) + "#{movie.rating}"
+    puts "  Genre(s): ".colorize(:light_blue) + "#{movie.genres.join(', ')}"
+    puts "  Director(s): ".colorize(:light_blue) + "#{movie.directors.join(', ')}"
+    puts "  Writers(s): ".colorize(:light_blue) + "#{movie.writers.join(', ')}"
+    puts "  Release date: ".colorize(:light_blue) + "#{movie.release_date}"
+    puts "  Synopsis: ".colorize(:light_blue) + "#{movie.synopsis}"
+
   end
 
 end
