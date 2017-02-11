@@ -3,13 +3,13 @@ class Movie
   attr_accessor :title, :movie_url, :critics_score, :audience_score, :rating, :genres, :directors, :writers, :release_date, :runtime
   @@all = []
 
-  def initialize(title,movie_url)
-    @title = title
-    @movie_url = movie_url
+  def initialize(movie_hash)
+    @title = movie_hash[:title]
+    @movie_url = movie_hash[:movie_url]
     save
   end
 
-  def self.all?
+  def self.all
     @@all
   end
 
@@ -18,10 +18,10 @@ class Movie
   end
 
   def self.create_from_collection(movie_array)
-    movie_array.each {|movie| new(movie)}  #self.new??????
+    movie_array.each {|movie_hash| new(movie_hash)}  #self.new??????
   end
 
-  def self.add_movie_attributes(attr_hash)
+  def add_movie_attributes(attr_hash)
     attr_hash.each do |key,value|
       self.send("#{key}=",value)
     end
