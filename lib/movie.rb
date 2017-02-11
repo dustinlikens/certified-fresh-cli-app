@@ -18,7 +18,9 @@ class Movie
   end
 
   def self.create_from_collection(movie_array)
-    movie_array.each {|movie_hash| new(movie_hash)}  #self.new??????
+    movie_array.each do |movie_hash| 
+      new(movie_hash)
+    end
   end
 
   def add_movie_attributes(attr_hash)

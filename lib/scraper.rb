@@ -6,17 +6,17 @@ require 'phantomjs'
 class Scraper
 
   def self.dom_from_url(url)
-    # Capybara.register_driver(:poltergeist) do |app| 
-    #   client = Capybara::Poltergeist::Driver.new(app, phantomjs_logger: nil, stdout: nil, timeout: 120, js_errors: false, debug: false, phantomjs_options: ['--load-images=false'] ) 
-    # end
-    # Capybara.default_driver = :poltergeist  # configure Capybara to use poltergeist as the driver
-    # page = Capybara.current_session     # the object we'll interact with
-    # page.driver.headers = { 'User-Agent' => 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2) Gecko/20100115 Firefox/3.6' }
-    # # url = "https://www.rottentomatoes.com/m/i_am_not_your_negro"
-    # page.visit url
-    # puts page.body
-    # Nokogiri::HTML(page.body)
-    Nokogiri::HTML(open('./fixtures/index.html'))
+    puts "This might take a minute, rottentomatoes.com uses lots of javascript!"
+    Capybara.register_driver(:poltergeist) do |app| 
+      client = Capybara::Poltergeist::Driver.new(app, phantomjs_logger: nil, stdout: nil, timeout: 120, js_errors: false, debug: false, phantomjs_options: ['--load-images=false'] ) 
+    end
+    Capybara.default_driver = :poltergeist
+    page = Capybara.current_session   
+    page.driver.headers = { 'User-Agent' => 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2) Gecko/20100115 Firefox/3.6' }
+    page.visit url
+    Nokogiri::HTML(page.body)
+
+    # Nokogiri::HTML(open('./fixtures/index.html'))
   end
 
   def self.page_from_url(url)

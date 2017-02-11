@@ -18,9 +18,13 @@ class CLI
   end
 
   def add_attributes_to_movies
+    total_movies = Movie.all.length
+    scraped_movies = 0
     Movie.all.each do |movie|
       attr_hash = Scraper.scrape_movie_page(movie.movie_url)
       movie.add_movie_attributes(attr_hash)
+      scraped_movies += 1
+      puts "#{scraped_movies} of #{total_movies} movies scraped..."
     end
   end
 
