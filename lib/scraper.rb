@@ -52,7 +52,8 @@ class Scraper
     attr_hash[:writers] = meta_list.css(".meta-value")[3].css("a").map{|a|a.text.strip}
     attr_hash[:release_date] = meta_list.css(".meta-value")[4].css("time").text
     attr_hash[:runtime] = meta_list.css(".meta-value")[5].css("time").text.strip
-    puts attr_hash[:writers].inspect
+
+    attr_hash
   end
 
 end
