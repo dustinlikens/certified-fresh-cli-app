@@ -47,13 +47,13 @@ class Scraper
     attr_hash[:synopsis] = page.at_css("[id=movieSynopsis]").text.strip
     attr_hash[:consensus] = page.css("p.critic_consensus")[0].text.split("Critics Consensus:\n")[1].strip
     
-    meta_list = page.css("ul.content-meta.info")
-    attr_hash[:rating] = meta_list.css(".meta-value")[0].text
-    attr_hash[:genres] = meta_list.css(".meta-value")[1].css("a").map{|a|a.text.strip}
-    attr_hash[:directors] = meta_list.css(".meta-value")[2].css("a").map{|a|a.text.strip}
-    attr_hash[:writers] = meta_list.css(".meta-value")[3].css("a").map{|a|a.text.strip}
-    attr_hash[:release_date] = meta_list.css(".meta-value")[4].css("time").text
-    attr_hash[:runtime] = meta_list.css(".meta-value")[5].css("time").text.strip
+    meta_list = page.css("ul.content-meta.info .meta-value")
+    attr_hash[:rating] = meta_list[0].text
+    attr_hash[:genres] = meta_list[1].css("a").map{|a|a.text.strip}
+    attr_hash[:directors] = meta_list[2].css("a").map{|a|a.text.strip}
+    attr_hash[:writers] = meta_list[3].css("a").map{|a|a.text.strip}
+    attr_hash[:release_date] = meta_list[4].css("time").text
+    attr_hash[:runtime] = meta_list[5].css("time").text.strip
 
     attr_hash
   end
