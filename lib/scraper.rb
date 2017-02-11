@@ -44,6 +44,8 @@ class Scraper
     attr_hash = {}
     attr_hash[:critics_score] = page.css(".critic-score .meter-value")[0].text
     attr_hash[:audience_score] = page.css(".audience-score .meter-value")[0].text
+    attr_hash[:synopsis] = page.at_css("[id=movieSynopsis]").text.strip
+    attr_hash[:consensus] = page.css("p.critic_consensus")[0].text.split("Critics Consensus:\n")[1].strip
     
     meta_list = page.css("ul.content-meta.info")
     attr_hash[:rating] = meta_list.css(".meta-value")[0].text
