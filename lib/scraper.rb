@@ -2,7 +2,6 @@ require 'open-uri'
 require 'nokogiri'
 require 'capybara/poltergeist'
 require 'phantomjs'
-require 'mechanize'
 
 class Scraper
 
@@ -59,6 +58,6 @@ class Scraper
 end
 
 s = Scraper.new
-# s.scrape_movie_list('https://www.rottentomatoes.com/browse/cf-in-theaters/?minTomato=70&certified=true')
-s.scrape_movie_page('https://www.rottentomatoes.com/m/the_lego_batman_movie')
+s.scrape_movie_list('https://www.rottentomatoes.com/browse/cf-in-theaters/?minTomato=70&certified=true')
+# s.scrape_movie_page('https://www.rottentomatoes.com/m/the_lego_batman_movie')
 
