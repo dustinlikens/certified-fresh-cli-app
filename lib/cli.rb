@@ -5,26 +5,62 @@ require 'colorize'
 class CLI
 
   def run
+    puts "\nWelcome to Certified Fresh! I will retieve a list of new-release movies from Rottentomatoes.com with critics' scores over 70%.\n\n"
     make_movies
     add_attributes_to_movies
     display_movies
-    puts "Enter movie # to view additional details"
-    display_movie_details(gets.strip)
+    display_prompt
+  end
+
+  def determine_url
+    puts "Please select a display mode:"
+    puts "  1: Top 30 By score"
+    puts "  2: Top 30 By release date"
+    puts "  3: Top 30 By popularity"
+    input = gets.strip
+    case input
+    when "1"
+      "https://www.rottentomatoes.com/browse/cf-in-theaters/?minTomato=70&sortBy=tomato&certified=true"
+    when "2"
+      "https://www.rottentomatoes.com/browse/cf-in-theaters/?minTomato=70&sortBy=release&certified=true"
+    when "3"
+     "https://www.rottentomatoes.com/browse/cf-in-theaters/?minTomato=70&certified=true"
+    else
+      puts "Invalid input!"
+      determine_url
+    end
+  end
+
+  def display_prompt
+    loop do
+      puts 'Enter movie # to view additional details, "n" for new display mode, or "q" to quit.'
+      input = gets.strip
+      if input.to_i.between?(1,Movie.all.length)
+        display_movie_details(input)
+      elsif input == "n"
+        make_movies
+      elsif input == "q"
+        break
+      else
+        puts "Invalid input!"
+      end
+      # input == "q" ? break : display_movie_details(input)
+      # # display_movie_details(gets.strip)
+    end
   end
 
   def make_movies
-    movie_array = Scraper.scrape_movie_list('https://www.rottentomatoes.com/browse/cf-in-theaters/?minTomato=70&certified=true')
+    movie_array = Scraper.scrape_movie_list(determine_url)
     Movie.create_from_collection(movie_array)
   end
 
   def add_attributes_to_movies
-    total_movies = Movie.all.length
     scraped_movies = 0
     Movie.all.each do |movie|
       attr_hash = Scraper.scrape_movie_page(movie.movie_url)
       movie.add_movie_attributes(attr_hash)
       scraped_movies += 1
-      puts "#{scraped_movies} of #{total_movies} movies scraped..."
+      puts "#{scraped_movies} of #{Movie.all.length} movies scraped..."
     end
   end
 
@@ -59,5 +95,5 @@ class CLI
 end
 
 
-c = CLI.new
-c.run
+# c = CLI.new
+# c.run

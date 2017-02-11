@@ -6,7 +6,7 @@ require 'phantomjs'
 class Scraper
 
   def self.dom_from_url(url)
-    puts "This might take a minute, rottentomatoes.com uses lots of javascript!"
+    puts "This might take a minute, Rottentomatoes.com uses lots of javascript!"
     Capybara.register_driver(:poltergeist) do |app| 
       client = Capybara::Poltergeist::Driver.new(app, phantomjs_logger: nil, stdout: nil, timeout: 120, js_errors: false, debug: false, phantomjs_options: ['--load-images=false'] ) 
     end
